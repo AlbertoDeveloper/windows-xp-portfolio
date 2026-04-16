@@ -68,6 +68,12 @@ export default function App() {
       return acc
     }, {})
   )
+  const [windowCenterTriggers, setWindowCenterTriggers] = useState(() =>
+    Object.keys(initialWindows).reduce((acc, id) => {
+      acc[id] = 0
+      return acc
+    }, {})
+  )
   const [startOpen, setStartOpen] = useState(false)
   const [clock] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
 
@@ -82,6 +88,10 @@ export default function App() {
     setWindows((prev) => ({
       ...prev,
       [windowId]: { ...prev[windowId], open: true, minimized: false },
+    }))
+    setWindowCenterTriggers((prev) => ({
+      ...prev,
+      [windowId]: prev[windowId] + 1,
     }))
     bringToFront(windowId)
   }
@@ -153,6 +163,7 @@ export default function App() {
               onMinimize={() => minimizeWindow(id)}
               onFocus={() => bringToFront(id)}
               offset={windowOffsets[id]}
+              centerTrigger={windowCenterTriggers[id]}
               zIndex={index + 1}
               onMove={(nextOffset) =>
                 setWindowOffsets((prev) => ({

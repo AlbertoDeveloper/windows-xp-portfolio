@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { Minus, Monitor, X } from 'lucide-react'
 
 export default function Window({
@@ -8,10 +8,32 @@ export default function Window({
   onMinimize,
   onFocus,
   offset = { x: 0, y: 0 },
+  centerTrigger = 0,
   zIndex = 1,
   onMove,
 }) {
   const dragRef = useRef(null)
+  const shellRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const shell = shellRef.current
+    if (!shell) return
+
+    const parent = shell.offsetParent
+    if (!(parent instanceof HTMLElement)) return
+
+    const parentRect = parent.getBoundingClientRect()
+    const shellRect = shell.getBoundingClientRect()
+    const maxX = Math.max(parentRect.width - shellRect.width, 0)
+    const maxY = Math.max(parentRect.height - shellRect.height, 0)
+    const centeredX = (parentRect.width - shellRect.width) / 2
+    const centeredY = (parentRect.height - shellRect.height) / 2
+    const nextX = Math.round(Math.min(Math.max(centeredX, 0), maxX))
+    const nextY = Math.round(Math.min(Math.max(centeredY, 0), maxY))
+
+    if (nextX === offset.x && nextY === offset.y) return
+    onMove({ x: nextX, y: nextY })
+  }, [centerTrigger])
 
   const handleTitlebarPointerDown = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return
@@ -55,6 +77,7 @@ export default function Window({
 
   return (
     <div
+      ref={shellRef}
       className="window-shell"
       style={{ transform: `translate(${offset.x}px, ${offset.y}px)`, zIndex }}
       onPointerDown={onFocus}
