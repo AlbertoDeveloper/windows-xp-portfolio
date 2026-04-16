@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Minus, Monitor, X } from 'lucide-react'
 
 export default function Window({
@@ -11,42 +11,61 @@ export default function Window({
   zIndex = 1,
   onMove,
 }) {
-  const handleTitlebarMouseDown = (event) => {
-    if (event.button !== 0) return
+  const dragRef = useRef(null)
+
+  const handleTitlebarPointerDown = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
     if (event.target.closest('.titlebar-btn')) return
 
     onFocus()
 
-    const startMouseX = event.clientX
-    const startMouseY = event.clientY
-    const startOffsetX = offset.x
-    const startOffsetY = offset.y
-
-    const handleMouseMove = (moveEvent) => {
-      onMove({
-        x: startOffsetX + (moveEvent.clientX - startMouseX),
-        y: startOffsetY + (moveEvent.clientY - startMouseY),
-      })
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startMouseX: event.clientX,
+      startMouseY: event.clientY,
+      startOffsetX: offset.x,
+      startOffsetY: offset.y,
     }
 
-    const handleMouseUp = () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', handleMouseUp)
-      document.body.style.userSelect = ''
-    }
-
+    event.currentTarget.setPointerCapture(event.pointerId)
     document.body.style.userSelect = 'none'
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseup', handleMouseUp)
+  }
+
+  const handleTitlebarPointerMove = (event) => {
+    const dragState = dragRef.current
+    if (!dragState || dragState.pointerId !== event.pointerId) return
+
+    onMove({
+      x: dragState.startOffsetX + (event.clientX - dragState.startMouseX),
+      y: dragState.startOffsetY + (event.clientY - dragState.startMouseY),
+    })
+  }
+
+  const handleTitlebarPointerEnd = (event) => {
+    const dragState = dragRef.current
+    if (!dragState || dragState.pointerId !== event.pointerId) return
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+
+    dragRef.current = null
+    document.body.style.userSelect = ''
   }
 
   return (
     <div
       className="window-shell"
       style={{ transform: `translate(${offset.x}px, ${offset.y}px)`, zIndex }}
-      onMouseDown={onFocus}
+      onPointerDown={onFocus}
     >
-      <div className="window-titlebar" onMouseDown={handleTitlebarMouseDown}>
+      <div
+        className="window-titlebar"
+        onPointerDown={handleTitlebarPointerDown}
+        onPointerMove={handleTitlebarPointerMove}
+        onPointerUp={handleTitlebarPointerEnd}
+        onPointerCancel={handleTitlebarPointerEnd}
+      >
         <div className="window-titlebar__left">
           <Monitor size={15} />
           <span>{title}</span>
