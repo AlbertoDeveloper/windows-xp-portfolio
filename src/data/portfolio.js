@@ -15,8 +15,8 @@ export const profile = {
     'Software engineer focused on Java, Spring Boot, React, enterprise platforms, automated testing, and CI/CD modernization.',
   email: 'your-email@example.com',
   phone: '+52 000 000 0000',
-  linkedin: 'https://www.linkedin.com/in/your-linkedin',
-  github: 'https://github.com/your-github',
+  linkedin: 'https://www.linkedin.com/in/alberto-ruiz-castro-08380a157/',
+  github: 'https://github.com/AlbertoDeveloper',
 }
 
 export const desktopIcons = [
