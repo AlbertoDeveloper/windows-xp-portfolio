@@ -28,6 +28,7 @@ import Taskbar from './components/Taskbar'
 import TouchHelper from './components/TouchHelper'
 import Window from './components/Window'
 import './styles/App.css'
+import { trackEvent } from './utils/analytics'
 import {
   desktopIcons,
   experience,
@@ -182,6 +183,12 @@ export default function App() {
   }, [windows, windowOrder, windowOffsets])
 
   const normalizeUrl = (url) => url.replace(/\/+$/, '')
+  const getLinkArea = (linkElement) => {
+    if (linkElement.closest('.start-menu')) return 'start_menu'
+    if (linkElement.closest('.contact-list')) return 'contact_window'
+    return 'desktop'
+  }
+
   const isWarnableExternalUrl = (url) => {
     const normalizedUrl = normalizeUrl(url)
     return normalizedUrl === normalizeUrl(profile.github) || normalizedUrl === normalizeUrl(profile.linkedin)
@@ -199,6 +206,7 @@ export default function App() {
       ...prev,
       [windowId]: { ...prev[windowId], open: true, minimized: false },
     }))
+    trackEvent('Window Opened', { window: windowId })
     setWindowCenterTriggers((prev) => ({
       ...prev,
       [windowId]: prev[windowId] + 1,
@@ -211,6 +219,7 @@ export default function App() {
       ...prev,
       [windowId]: { ...prev[windowId], open: false, minimized: false },
     }))
+    trackEvent('Window Closed', { window: windowId })
     setWindowOrder((prev) => prev.filter((id) => id !== windowId))
   }
 
@@ -219,6 +228,7 @@ export default function App() {
       ...prev,
       [windowId]: { ...prev[windowId], minimized: true },
     }))
+    trackEvent('Window Minimized', { window: windowId })
   }
 
   const restoreWindow = (windowId) => {
@@ -226,6 +236,7 @@ export default function App() {
       ...prev,
       [windowId]: { ...prev[windowId], open: true, minimized: false },
     }))
+    trackEvent('Window Restored', { window: windowId })
     bringToFront(windowId)
   }
 
@@ -243,6 +254,8 @@ export default function App() {
   )
 
   const launchIcon = (item) => {
+    trackEvent('Desktop Icon Clicked', { icon: item.id, type: item.type })
+
     if (item.type === 'link') {
       setPendingExternalUrl(item.href)
       return
@@ -255,14 +268,22 @@ export default function App() {
     const link = event.target.closest('a[href]')
     if (!(link instanceof HTMLAnchorElement)) return
 
+    trackEvent('Link Clicked', {
+      area: getLinkArea(link),
+      label: link.textContent?.trim() || 'link',
+      href: link.getAttribute('href') || link.href,
+    })
+
     if (!isWarnableExternalUrl(link.href)) return
 
     event.preventDefault()
+    trackEvent('External Link Prompted', { href: link.href })
     setPendingExternalUrl(link.href)
   }
 
   const handleConfirmExternalNavigation = () => {
     if (!pendingExternalUrl) return
+    trackEvent('External Link Confirmed', { href: pendingExternalUrl })
     window.open(pendingExternalUrl, '_blank', 'noopener,noreferrer')
     setPendingExternalUrl(null)
   }
