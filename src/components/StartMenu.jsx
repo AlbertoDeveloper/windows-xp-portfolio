@@ -1,6 +1,7 @@
 import React from 'react'
 import { Briefcase, Github, Globe, Linkedin, Mail, Phone, Power } from 'lucide-react'
 import { profile } from '../data/portfolio'
+import profilePhoto from '../resources/Alberto.jpg'
 import '../styles/StartMenu.css'
 
 export default function StartMenu({ isOpen, onClose, onOpenWindow }) {
@@ -9,8 +10,13 @@ export default function StartMenu({ isOpen, onClose, onOpenWindow }) {
   return (
     <div className="start-menu">
       <div className="start-menu__header">
-        <div className="start-menu__name">{profile.name}</div>
-        <div className="start-menu__role">{profile.role}</div>
+        <div className="start-menu__avatar-wrap">
+          <img src={profilePhoto} alt={`${profile.name} profile`} className="start-menu__avatar" />
+        </div>
+        <div className="start-menu__identity">
+          <div className="start-menu__name">{profile.name}</div>
+          <div className="start-menu__role">{profile.role}</div>
+        </div>
       </div>
 
       <div className="start-menu__list">
