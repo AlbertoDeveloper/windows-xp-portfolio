@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import {
+  AlertTriangle,
   Atom,
   ChartPie,
   CircleGauge,
@@ -20,6 +21,7 @@ import {
   Waypoints,
   Webhook,
   Workflow,
+  X,
 } from 'lucide-react'
 import DesktopIcon from './components/DesktopIcon'
 import Taskbar from './components/Taskbar'
@@ -76,7 +78,14 @@ export default function App() {
     }, {})
   )
   const [startOpen, setStartOpen] = useState(false)
+  const [pendingExternalUrl, setPendingExternalUrl] = useState(null)
   const [clock] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
+
+  const normalizeUrl = (url) => url.replace(/\/+$/, '')
+  const isWarnableExternalUrl = (url) => {
+    const normalizedUrl = normalizeUrl(url)
+    return normalizedUrl === normalizeUrl(profile.github) || normalizedUrl === normalizeUrl(profile.linkedin)
+  }
 
   const bringToFront = (windowId) => {
     setWindowOrder((prev) => {
@@ -135,15 +144,31 @@ export default function App() {
 
   const launchIcon = (item) => {
     if (item.type === 'link') {
-      window.open(item.href, '_blank', 'noopener,noreferrer')
+      setPendingExternalUrl(item.href)
       return
     }
 
     openWindow(item.windowId)
   }
 
+  const handleExternalLinkCapture = (event) => {
+    const link = event.target.closest('a[href]')
+    if (!(link instanceof HTMLAnchorElement)) return
+
+    if (!isWarnableExternalUrl(link.href)) return
+
+    event.preventDefault()
+    setPendingExternalUrl(link.href)
+  }
+
+  const handleConfirmExternalNavigation = () => {
+    if (!pendingExternalUrl) return
+    window.open(pendingExternalUrl, '_blank', 'noopener,noreferrer')
+    setPendingExternalUrl(null)
+  }
+
   return (
-    <div className="xp-desktop">
+    <div className="xp-desktop" onClickCapture={handleExternalLinkCapture}>
       <div className="xp-desktop__overlay" />
 
       <main className="desktop-area">
@@ -346,6 +371,41 @@ export default function App() {
         openWindow={openWindow}
       />
       <TouchHelper />
+
+      {pendingExternalUrl && (
+        <div className="warning-overlay" role="presentation">
+          <div className="warning-window" role="dialog" aria-modal="true" aria-label="External link warning">
+            <div className="warning-window__titlebar">
+              <span>Warning</span>
+              <button
+                type="button"
+                className="warning-window__close"
+                onClick={() => setPendingExternalUrl(null)}
+                aria-label="Close warning"
+              >
+                <X size={12} />
+              </button>
+            </div>
+
+            <div className="warning-window__body">
+              <AlertTriangle size={34} className="warning-window__icon" />
+              <div className="warning-window__message">
+                <p>This action will redirect you to a different page:</p>
+                <p className="warning-window__url">{pendingExternalUrl}</p>
+              </div>
+            </div>
+
+            <div className="warning-window__actions">
+              <button type="button" className="xp-button" onClick={handleConfirmExternalNavigation}>
+                <span className="xp-button__inner">Yes</span>
+              </button>
+              <button type="button" className="xp-button" onClick={() => setPendingExternalUrl(null)}>
+                <span className="xp-button__inner">Canel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

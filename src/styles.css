@@ -562,6 +562,91 @@ button {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+.warning-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(9, 27, 64, 0.28);
+}
+
+.warning-window {
+  width: min(560px, 100%);
+  border: 1px solid #1f5fdb;
+  background: #ece9d8;
+  color: #141414;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
+}
+
+.warning-window__titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #0854df, #3c8af8, #0854df);
+  padding: 6px 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.warning-window__close {
+  display: grid;
+  height: 18px;
+  width: 18px;
+  place-items: center;
+  border: 1px solid #8f0c08;
+  background: linear-gradient(180deg, #ff8f88, #e62f25);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.warning-window__body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px 10px;
+}
+
+.warning-window__icon {
+  margin-top: 2px;
+  color: #e0b500;
+  stroke: #6c5500;
+  stroke-width: 1.8;
+}
+
+.warning-window__message p {
+  margin: 0;
+  color: #1b1b1b;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.warning-window__url {
+  margin-top: 8px !important;
+  overflow-wrap: anywhere;
+  border: 1px solid #bfb9a9;
+  background: #f6f3e8;
+  padding: 6px 8px;
+  color: #143d89;
+  font-family: 'Lucida Console', Monaco, monospace;
+  font-size: 12px !important;
+}
+
+.warning-window__actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  border-top: 1px solid #c9c4b6;
+  padding: 10px 14px 12px;
+}
+
+.warning-window__actions .xp-button {
+  min-width: 82px;
+}
+
 .clippy-helper {
   pointer-events: none;
   position: fixed;
@@ -728,6 +813,24 @@ button {
 
   .control-panel-grid {
     grid-template-columns: 1fr;
+  }
+
+  .warning-window {
+    width: min(94vw, 520px);
+  }
+
+  .warning-window__body {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .warning-window__icon {
+    margin: 0;
+  }
+
+  .warning-window__actions {
+    flex-wrap: wrap;
+    padding-top: 9px;
   }
 
   .clippy-helper {
