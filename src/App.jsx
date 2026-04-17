@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 import DesktopIcon from './components/DesktopIcon'
 import Taskbar from './components/Taskbar'
+import TouchHelper from './components/TouchHelper'
 import Window from './components/Window'
 import {
   desktopIcons,
@@ -344,6 +345,7 @@ export default function App() {
         clock={clock}
         openWindow={openWindow}
       />
+      <TouchHelper />
     </div>
   )
 }
