@@ -1,6 +1,7 @@
 import React from 'react'
 import { Menu } from 'lucide-react'
 import StartMenu from './StartMenu'
+import '../styles/Taskbar.css'
 
 export default function Taskbar({ startOpen, setStartOpen, minimizedWindows, restoreWindow, clock, openWindow }) {
   return (

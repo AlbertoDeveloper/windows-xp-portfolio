@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react'
 import { Minus, Monitor, X } from 'lucide-react'
+import '../styles/Window.css'
 
 export default function Window({
   title,

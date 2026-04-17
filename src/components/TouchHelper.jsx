@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Paperclip } from 'lucide-react'
+import '../styles/TouchHelper.css'
 
 function isTouchScreenDevice() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return false

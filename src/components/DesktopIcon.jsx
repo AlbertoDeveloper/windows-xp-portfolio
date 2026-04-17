@@ -1,4 +1,5 @@
 import React from 'react'
+import '../styles/DesktopIcon.css'
 
 export default function DesktopIcon({ item, onLaunch }) {
   const Icon = item.icon

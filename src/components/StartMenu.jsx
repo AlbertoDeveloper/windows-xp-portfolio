@@ -1,6 +1,7 @@
 import React from 'react'
 import { Briefcase, Github, Globe, Linkedin, Mail, Phone, Power } from 'lucide-react'
 import { profile } from '../data/portfolio'
+import '../styles/StartMenu.css'
 
 export default function StartMenu({ isOpen, onClose, onOpenWindow }) {
   if (!isOpen) return null
