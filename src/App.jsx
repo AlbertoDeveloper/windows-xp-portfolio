@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   AlertTriangle,
   Atom,
@@ -41,6 +41,78 @@ function SectionTitle({ children }) {
   return <h2 className="section-title">{children}</h2>
 }
 
+const DESKTOP_STATE_KEY = 'xp-portfolio.desktop.v1'
+
+const createDefaultWindowOffsets = () =>
+  Object.keys(initialWindows).reduce((acc, id, index) => {
+    acc[id] = { x: 90 + index * 30, y: 42 + index * 26 }
+    return acc
+  }, {})
+
+const createDefaultWindowOrder = (windowsState = initialWindows) =>
+  Object.entries(windowsState)
+    .filter(([, value]) => value.open)
+    .map(([id]) => id)
+
+const sanitizeOffset = (value, fallback) => {
+  if (!value || typeof value !== 'object') return fallback
+
+  const x = Number(value.x)
+  const y = Number(value.y)
+
+  return {
+    x: Number.isFinite(x) ? x : fallback.x,
+    y: Number.isFinite(y) ? y : fallback.y,
+  }
+}
+
+const getPersistedDesktopState = () => {
+  if (typeof window === 'undefined') return null
+
+  const raw = window.localStorage.getItem(DESKTOP_STATE_KEY)
+  if (!raw) return null
+
+  try {
+    const parsed = JSON.parse(raw)
+    if (!parsed || typeof parsed !== 'object') return null
+
+    const defaultOffsets = createDefaultWindowOffsets()
+
+    const windows = Object.keys(initialWindows).reduce((acc, id) => {
+      const fallback = initialWindows[id]
+      const saved = parsed.windows?.[id]
+
+      const open = typeof saved?.open === 'boolean' ? saved.open : fallback.open
+      const minimized = open && typeof saved?.minimized === 'boolean' ? saved.minimized : false
+
+      acc[id] = { ...fallback, open, minimized }
+      return acc
+    }, {})
+
+    const orderedOpen = Array.isArray(parsed.windowOrder)
+      ? parsed.windowOrder.filter(
+          (id, index, source) =>
+            typeof id === 'string' &&
+            id in initialWindows &&
+            windows[id].open &&
+            source.indexOf(id) === index
+        )
+      : []
+
+    const fallbackOrder = createDefaultWindowOrder(windows)
+    const windowOrder = [...orderedOpen, ...fallbackOrder.filter((id) => !orderedOpen.includes(id))]
+
+    const windowOffsets = Object.keys(initialWindows).reduce((acc, id) => {
+      acc[id] = sanitizeOffset(parsed.windowOffsets?.[id], defaultOffsets[id])
+      return acc
+    }, {})
+
+    return { windows, windowOrder, windowOffsets }
+  } catch {
+    return null
+  }
+}
+
 const techIconsBySkill = {
   Java: Coffee,
   'Spring Boot': Sprout,
@@ -60,27 +132,54 @@ const techIconsBySkill = {
 }
 
 export default function App() {
-  const [windows, setWindows] = useState(initialWindows)
-  const [windowOrder, setWindowOrder] = useState(() =>
-    Object.entries(initialWindows)
-      .filter(([, value]) => value.open)
-      .map(([id]) => id)
+  const persistedDesktop = useMemo(() => getPersistedDesktopState(), [])
+  const [windows, setWindows] = useState(() => persistedDesktop?.windows ?? initialWindows)
+  const [windowOrder, setWindowOrder] = useState(
+    () => persistedDesktop?.windowOrder ?? createDefaultWindowOrder()
   )
-  const [windowOffsets, setWindowOffsets] = useState(() =>
-    Object.keys(initialWindows).reduce((acc, id, index) => {
-      acc[id] = { x: 90 + index * 30, y: 42 + index * 26 }
-      return acc
-    }, {})
+  const [windowOffsets, setWindowOffsets] = useState(
+    () => persistedDesktop?.windowOffsets ?? createDefaultWindowOffsets()
   )
   const [windowCenterTriggers, setWindowCenterTriggers] = useState(() =>
     Object.keys(initialWindows).reduce((acc, id) => {
-      acc[id] = 0
+      acc[id] = persistedDesktop ? 0 : initialWindows[id].open ? 1 : 0
       return acc
     }, {})
   )
   const [startOpen, setStartOpen] = useState(false)
   const [pendingExternalUrl, setPendingExternalUrl] = useState(null)
   const [clock] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const timeoutId = window.setTimeout(() => {
+      const windowsToPersist = Object.keys(initialWindows).reduce((acc, id) => {
+        const state = windows[id] ?? initialWindows[id]
+        acc[id] = {
+          open: Boolean(state.open),
+          minimized: Boolean(state.open && state.minimized),
+        }
+        return acc
+      }, {})
+
+      try {
+        window.localStorage.setItem(
+          DESKTOP_STATE_KEY,
+          JSON.stringify({
+            version: 1,
+            windows: windowsToPersist,
+            windowOrder,
+            windowOffsets,
+          })
+        )
+      } catch {
+        // Ignore persistence failures (private mode/quota) and keep app usable.
+      }
+    }, 120)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [windows, windowOrder, windowOffsets])
 
   const normalizeUrl = (url) => url.replace(/\/+$/, '')
   const isWarnableExternalUrl = (url) => {

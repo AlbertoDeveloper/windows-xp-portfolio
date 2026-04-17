@@ -17,6 +17,8 @@ export default function Window({
   const shellRef = useRef(null)
 
   useLayoutEffect(() => {
+    if (centerTrigger <= 0) return
+
     const shell = shellRef.current
     if (!shell) return
 
