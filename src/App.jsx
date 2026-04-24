@@ -30,7 +30,12 @@ import Window from './components/Window'
 import './styles/App.css'
 import { trackEvent } from './utils/analytics'
 import {
+  certifications,
+  cvHeaderLine,
+  cvProfessionalSummary,
+  cvTechnicalSkills,
   desktopIcons,
+  education,
   experience,
   initialWindows,
   profile,
@@ -323,20 +328,27 @@ export default function App() {
                 <div className="window-body">
                   <div>
                     <h1 className="hero-name">{profile.name}</h1>
-                    <p className="hero-summary">{profile.summary}</p>
+                    <p className="hero-summary">{cvHeaderLine}</p>
                   </div>
 
                   <SectionTitle>Professional Summary</SectionTitle>
-                  <p className="body-copy">
-                    Software engineer with strong experience building and improving enterprise applications,
-                    backend APIs, frontend interfaces, automated testing, and CI/CD workflows. Comfortable
-                    working across the stack and improving system reliability in large business environments.
-                  </p>
+                  <p className="body-copy">{cvProfessionalSummary}</p>
 
-                  <SectionTitle>Experience</SectionTitle>
+                  <SectionTitle>Technical Skills</SectionTitle>
+                  <div className="card-list">
+                    <article className="xp-card">
+                      {cvTechnicalSkills.map((skillGroup) => (
+                        <p key={skillGroup.category} className="body-copy body-copy--compact">
+                          <strong>{skillGroup.category}:</strong> {skillGroup.items}
+                        </p>
+                      ))}
+                    </article>
+                  </div>
+
+                  <SectionTitle>Professional Experience</SectionTitle>
                   <div className="card-list">
                     {experience.map((job) => (
-                      <article key={job.company} className="xp-card">
+                      <article key={`${job.company}-${job.period}`} className="xp-card">
                         <div className="xp-card__header">
                           <div>
                             <div className="xp-card__title">{job.role}</div>
@@ -353,13 +365,26 @@ export default function App() {
                     ))}
                   </div>
 
-                  <SectionTitle>Core Tools</SectionTitle>
-                  <div className="tag-wrap">
-                    {skills.map((skill) => (
-                      <span key={skill} className="skill-tag">
-                        {skill}
-                      </span>
-                    ))}
+                  <SectionTitle>Education</SectionTitle>
+                  <div className="card-list">
+                    <article className="xp-card">
+                      {education.map((entry) => (
+                        <p key={entry} className="body-copy body-copy--compact">
+                          {entry}
+                        </p>
+                      ))}
+                    </article>
+                  </div>
+
+                  <SectionTitle>Certifications</SectionTitle>
+                  <div className="card-list">
+                    <article className="xp-card">
+                      {certifications.map((entry) => (
+                        <p key={entry} className="body-copy body-copy--compact">
+                          {entry}
+                        </p>
+                      ))}
+                    </article>
                   </div>
                 </div>
               )}

@@ -19,6 +19,20 @@ export const profile = {
   github: 'https://github.com/AlbertoDeveloper',
 }
 
+export const cvHeaderLine =
+  'Zacatecas / Guadalajara, Mexico | ruiz.windows@gmail.com | +52 493 107 08 35 | linkedin.com/in/alberto-ruiz-castro-08380a157'
+
+export const cvProfessionalSummary =
+  'Full Stack Software Engineer with 6+ years of experience building and improving enterprise applications for Fortune 500 organizations, including The Home Depot, Verizon, and 24 Hour Fitness. Specialized in Java, Spring Boot, and React, with a track record of increasing automated test coverage to 80%+, modernizing legacy systems, improving production reliability, and streamlining CI/CD pipelines in large-scale consulting environments.'
+
+export const cvTechnicalSkills = [
+  { category: 'Languages', items: 'Java, JavaScript, PHP' },
+  { category: 'Frameworks', items: 'Spring Boot, React, Laravel' },
+  { category: 'Cloud & DevOps', items: 'Google Cloud Platform, GitHub Actions, Jenkins, CI/CD' },
+  { category: 'Databases', items: 'PostgreSQL, MySQL, Oracle' },
+  { category: 'Testing & Tools', items: 'JUnit, Git, Postman, GitHub Copilot, Codex' },
+]
+
 export const desktopIcons = [
   { id: 'cv', label: 'Alberto CV', icon: FileText, type: 'window', windowId: 'cv' },
   { id: 'about', label: 'About Me', icon: User, type: 'window', windowId: 'about' },
@@ -39,33 +53,52 @@ export const initialWindows = {
 
 export const experience = [
   {
-    role: 'Software Engineer',
-    company: 'TCS / The Home Depot',
-    period: 'Nov 2024 – Mar 2026',
+    role: 'Full Stack Developer',
+    company: 'Tata Consultancy Services | Client: The Home Depot',
+    period: 'Nov 2024 - Present',
     points: [
-      'Migrated CI pipelines from Jenkins to GitHub Actions using reusable workflows.',
-      'Improved reliability and automated test coverage across multiple repositories.',
-      'Supported modern Spring Boot and Java-based internal platforms used at enterprise scale.',
+      'Improved reliability of a nationwide internal employee platform by diagnosing and resolving production issues across Java/Spring Boot microservices and React frontend components.',
+      'Increased automated test coverage from ~40% to 80%+ across multiple repositories by expanding JUnit test suites and strengthening regression coverage.',
+      'Streamlined CI/CD delivery for high-availability enterprise services by migrating pipelines from Jenkins to GitHub Actions and standardizing modern deployment workflows.',
+      'Delivered full-stack features for internal business applications used by store employees by building backend services in Spring Boot and frontend functionality in React.',
     ],
   },
   {
-    role: 'Software Engineer',
-    company: 'TCS / Verizon',
-    period: 'Oct 2022 – Oct 2024',
+    role: 'Full Stack Developer',
+    company: 'Tata Consultancy Services | Client: Verizon',
+    period: 'Oct 2022 - Oct 2024',
     points: [
-      'Worked on full-stack enterprise systems using Java, Spring Boot, React, and SQL.',
-      'Contributed to stability improvements, testing, and ongoing maintenance of production apps.',
+      'Increased automated test coverage from ~30% to 80%+ across multiple Java/Spring services by building and expanding JUnit-based test suites, improving release stability and engineering confidence.',
+      'Modernized legacy backend services by upgrading Java and Spring versions, improving maintainability, security posture, and long-term scalability.',
+      'Delivered REST APIs for large-scale internal enterprise applications by developing and maintaining Java/Spring backend services that supported critical business workflows.',
+      'Improved end-to-end system integration by partnering with frontend engineers to connect backend APIs with legacy UI systems.',
     ],
   },
   {
-    role: 'Software Engineer',
-    company: 'Softtek / 24 Hour Fitness',
-    period: 'Earlier Experience',
+    role: 'Full Stack Developer',
+    company: 'Softtek | Client: 24 Hour Fitness',
+    period: 'Jul 2021 - Sep 2022',
     points: [
-      'Built and supported backend services with Spring Boot and relational databases.',
+      'Delivered customer-facing platform enhancements by building Java backend services and React frontend features for a nationwide fitness application.',
+      'Improved platform reliability and user experience by contributing to backend API enhancements and frontend UI improvements across production features.',
+    ],
+  },
+  {
+    role: 'Full Stack Developer',
+    company: 'TOPO',
+    period: 'Dec 2019 - Jun 2021',
+    points: [
+      'Improved management reporting efficiency by approximately 40% by designing and developing a web-based reporting system with PHP/Laravel, relational databases, and automated reporting workflows.',
+      'Increased visibility into business data by building reporting and visualization features that made operational information more accessible to management teams.',
     ],
   },
 ]
+
+export const education = [
+  "Bachelor's Degree in Computer Systems Engineering - Tecnologico Nacional de Mexico (TecNM), 2019",
+]
+
+export const certifications = ['GitHub Copilot Certification - Microsoft, 2025']
 
 export const projects = [
   {
