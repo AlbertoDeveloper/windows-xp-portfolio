@@ -11,6 +11,7 @@ import {
   Database,
   DatabaseZap,
   ExternalLink,
+  FileDown,
   FileCode2,
   Github,
   Linkedin,
@@ -24,10 +25,12 @@ import {
   X,
 } from 'lucide-react'
 import DesktopIcon from './components/DesktopIcon'
+import DownloadDialog from './components/DownloadDialog'
 import Taskbar from './components/Taskbar'
 import TouchHelper from './components/TouchHelper'
 import Window from './components/Window'
 import './styles/App.css'
+import cvPdfFileUrl from './resources/AlbertoRuizCV042026.pdf'
 import { trackEvent } from './utils/analytics'
 import {
   certifications,
@@ -153,6 +156,7 @@ export default function App() {
     }, {})
   )
   const [startOpen, setStartOpen] = useState(false)
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false)
   const [pendingExternalUrl, setPendingExternalUrl] = useState(null)
   const [clock] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
 
@@ -326,9 +330,19 @@ export default function App() {
             >
               {id === 'cv' && (
                 <div className="window-body">
-                  <div>
-                    <h1 className="hero-name">{profile.name}</h1>
-                    <p className="hero-summary">{cvHeaderLine}</p>
+                  <div className="cv-header-row">
+                    <div>
+                      <h1 className="hero-name">{profile.name}</h1>
+                      <p className="hero-summary">{cvHeaderLine}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="cv-download-trigger"
+                      onClick={() => setDownloadDialogOpen(true)}
+                    >
+                      <FileDown size={16} />
+                      <span>Download PDF</span>
+                    </button>
                   </div>
 
                   <SectionTitle>Professional Summary</SectionTitle>
@@ -517,6 +531,12 @@ export default function App() {
         openWindow={openWindow}
       />
       <TouchHelper />
+      <DownloadDialog
+        isOpen={downloadDialogOpen}
+        onClose={() => setDownloadDialogOpen(false)}
+        fileUrl={cvPdfFileUrl}
+        fileName="AlbertoRuizCV042026.pdf"
+      />
 
       {pendingExternalUrl && (
         <div className="warning-overlay" role="presentation">

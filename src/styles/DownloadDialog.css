@@ -1,0 +1,139 @@
+.download-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(8, 24, 60, 0.34);
+}
+
+.download-dialog-window {
+  width: min(520px, 100%);
+  border: 1px solid #1f5fdb;
+  background: #ece9d8;
+  color: #101010;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+}
+
+.download-dialog-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #0854df, #3c8af8, #0854df);
+  padding: 6px 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.download-dialog-close {
+  display: grid;
+  height: 18px;
+  width: 18px;
+  place-items: center;
+  border: 1px solid #8f0c08;
+  background: linear-gradient(180deg, #ff8f88, #e62f25);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.download-dialog-body {
+  padding: 14px 14px 10px;
+}
+
+.download-dialog-main {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.download-dialog-icon-wrap {
+  display: grid;
+  height: 40px;
+  width: 40px;
+  place-items: center;
+  border: 1px solid #acaa99;
+  background: #f3f1e5;
+  color: #1b4fab;
+}
+
+.download-dialog-heading {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.download-dialog-subtext {
+  margin: 3px 0 0;
+  color: #2f2f2f;
+  font-size: 13px;
+}
+
+.download-progress {
+  margin-top: 14px;
+  height: 14px;
+  border: 1px solid #6fa86f;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #f5f5f5;
+}
+
+.download-progress__fill {
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #5ed25e 0,
+      #5ed25e 6px,
+      #a6f3a6 6px,
+      #a6f3a6 9px
+    );
+  transition: width 70ms linear;
+}
+
+.download-stats {
+  margin-top: 10px;
+}
+
+.download-stats p {
+  margin: 0;
+  color: #1f1f1f;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.download-stats span {
+  color: #303030;
+}
+
+.download-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #c9c4b6;
+  padding: 10px 14px 12px;
+}
+
+.download-dialog-actions .xp-button {
+  min-width: 102px;
+}
+
+.download-dialog-actions .xp-button:disabled {
+  opacity: 0.75;
+  cursor: default;
+}
+
+@media (max-width: 639px) {
+  .download-dialog-window {
+    width: min(94vw, 500px);
+  }
+
+  .download-dialog-main {
+    align-items: start;
+  }
+
+  .download-dialog-actions {
+    justify-content: center;
+  }
+}

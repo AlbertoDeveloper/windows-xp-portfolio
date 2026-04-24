@@ -63,6 +63,29 @@
   line-height: 1.65;
 }
 
+.cv-header-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cv-download-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  border: 1px solid #7f9db9;
+  background: #ece9d8;
+  color: #123a7a;
+  padding: 6px 10px;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #aca899;
+  white-space: nowrap;
+}
+
+.cv-download-trigger:hover {
+  background: #f4f1e1;
+}
+
 .body-copy--compact {
   margin-top: 8px;
 }
@@ -399,6 +422,11 @@
 
   .hero-name {
     font-size: 24px;
+  }
+
+  .cv-header-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .control-panel {
