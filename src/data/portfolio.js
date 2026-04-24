@@ -3,6 +3,7 @@ import {
   FolderOpen,
   User,
 } from 'lucide-react'
+import cvDesktopIcon from '../resources/icon_cv.png'
 import githubDesktopIcon from '../resources/icon_github.png'
 import linkedinDesktopIcon from '../resources/icon_linkedin.png'
 
@@ -29,7 +30,7 @@ export const cvTechnicalSkills = [
 ]
 
 export const desktopIcons = [
-  { id: 'cv', label: 'Alberto CV', icon: FileText, type: 'window', windowId: 'cv' },
+  { id: 'cv', label: 'Alberto CV', icon: FileText, iconImage: cvDesktopIcon, type: 'window', windowId: 'cv' },
   { id: 'about', label: 'About Me', icon: User, type: 'window', windowId: 'about' },
   { id: 'projects', label: 'Projects', icon: FolderOpen, type: 'window', windowId: 'projects' },
   { id: 'linkedin', label: 'LinkedIn', icon: FileText, iconImage: linkedinDesktopIcon, type: 'link', href: profile.linkedin },
