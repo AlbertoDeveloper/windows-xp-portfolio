@@ -1,5 +1,5 @@
 import React from 'react'
-import { Briefcase, Github, Globe, Linkedin, Mail, Phone, Power } from 'lucide-react'
+import { Briefcase, Github, Globe, Linkedin, Mail, Power } from 'lucide-react'
 import { profile } from '../data/portfolio'
 import profilePhoto from '../resources/Alberto.jpg'
 import '../styles/StartMenu.css'
@@ -28,9 +28,6 @@ export default function StartMenu({ isOpen, onClose, onOpenWindow }) {
         </a>
         <a href={`mailto:${profile.email}`} className="start-menu__item">
           <Mail size={18} className="start-menu__item-icon" /> Email
-        </a>
-        <a href={`tel:${profile.phone.replace(/\s+/g, '')}`} className="start-menu__item">
-          <Phone size={18} className="start-menu__item-icon" /> Phone Number
         </a>
         <button
           onClick={() => {

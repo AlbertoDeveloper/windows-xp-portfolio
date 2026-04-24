@@ -13,6 +13,10 @@
   outline: none;
 }
 
+.desktop-icon--custom {
+  width: 112px;
+}
+
 .desktop-icon:hover,
 .desktop-icon:focus {
   background: rgba(255, 255, 255, 0.1);
@@ -28,8 +32,34 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+.desktop-icon__badge--custom {
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+
 .desktop-icon__glyph {
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.desktop-icon__image {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.desktop-icon__image--custom {
+  width: 100%;
+  height: 100%;
+  object-position: 56% 50%;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.45));
 }
 
 .desktop-icon__label {

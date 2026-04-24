@@ -1,10 +1,10 @@
 import {
   FileText,
   FolderOpen,
-  Github,
-  Linkedin,
   User,
 } from 'lucide-react'
+import githubDesktopIcon from '../resources/icon_github.png'
+import linkedinDesktopIcon from '../resources/icon_linkedin.png'
 
 export const profile = {
   name: 'Alberto Ruiz Castro',
@@ -32,8 +32,8 @@ export const desktopIcons = [
   { id: 'cv', label: 'Alberto CV', icon: FileText, type: 'window', windowId: 'cv' },
   { id: 'about', label: 'About Me', icon: User, type: 'window', windowId: 'about' },
   { id: 'projects', label: 'Projects', icon: FolderOpen, type: 'window', windowId: 'projects' },
-  { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, type: 'link', href: profile.linkedin },
-  { id: 'github', label: 'GitHub', icon: Github, type: 'link', href: profile.github },
+  { id: 'linkedin', label: 'LinkedIn', icon: FileText, iconImage: linkedinDesktopIcon, type: 'link', href: profile.linkedin },
+  { id: 'github', label: 'GitHub', icon: FileText, iconImage: githubDesktopIcon, type: 'link', href: profile.github },
 ]
 
 export const initialWindows = {
