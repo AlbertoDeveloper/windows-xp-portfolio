@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react'
-import { Minus, Monitor, X } from 'lucide-react'
+import { Monitor } from 'lucide-react'
+import TitlebarControlButton from './TitlebarControlButton'
 import '../styles/Window.css'
 
 export default function Window({
@@ -40,7 +41,7 @@ export default function Window({
 
   const handleTitlebarPointerDown = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return
-    if (event.target.closest('.titlebar-btn')) return
+    if (event.target.closest('.titlebar-control')) return
 
     onFocus()
 
@@ -97,12 +98,8 @@ export default function Window({
           <span>{title}</span>
         </div>
         <div className="window-titlebar__actions">
-          <button onClick={onMinimize} className="titlebar-btn titlebar-btn--minimize" aria-label="Minimize window">
-            <Minus size={14} />
-          </button>
-          <button onClick={onClose} className="titlebar-btn titlebar-btn--close" aria-label="Close window">
-            <X size={14} />
-          </button>
+          <TitlebarControlButton type="minimize" onClick={onMinimize} />
+          <TitlebarControlButton type="close" onClick={onClose} />
         </div>
       </div>
       <div className="window-content">{children}</div>

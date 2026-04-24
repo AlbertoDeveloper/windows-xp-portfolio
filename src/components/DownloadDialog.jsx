@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Download, FileText, X } from 'lucide-react'
+import { Download, FileText } from 'lucide-react'
+import TitlebarControlButton from './TitlebarControlButton'
 import '../styles/DownloadDialog.css'
 
 export default function DownloadDialog({ isOpen, onClose, fileUrl, fileName }) {
@@ -59,9 +60,7 @@ export default function DownloadDialog({ isOpen, onClose, fileUrl, fileName }) {
       >
         <div className="download-dialog-titlebar">
           <span>{isComplete ? 'Download complete' : 'Download file'}</span>
-          <button type="button" className="download-dialog-close" onClick={onClose} aria-label="Close dialog">
-            <X size={12} />
-          </button>
+          <TitlebarControlButton type="close" onClick={onClose} compact ariaLabel="Close dialog" />
         </div>
 
         <div className="download-dialog-body">

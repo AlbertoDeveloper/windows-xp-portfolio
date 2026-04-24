@@ -5,12 +5,12 @@ import {
   Github,
   Linkedin,
   Mail,
-  X,
 } from 'lucide-react'
 import DesktopIcon from './components/DesktopIcon'
 import DownloadDialog from './components/DownloadDialog'
 import Taskbar from './components/Taskbar'
 import TouchHelper from './components/TouchHelper'
+import TitlebarControlButton from './components/TitlebarControlButton'
 import Window from './components/Window'
 import './styles/App.css'
 import cvPdfFileUrl from './resources/AlbertoRuizCV042026.pdf'
@@ -458,14 +458,12 @@ export default function App() {
           <div className="warning-window" role="dialog" aria-modal="true" aria-label="External link warning">
             <div className="warning-window__titlebar">
               <span>Warning</span>
-              <button
-                type="button"
-                className="warning-window__close"
+              <TitlebarControlButton
+                type="close"
+                compact
+                ariaLabel="Close warning"
                 onClick={() => setPendingExternalUrl(null)}
-                aria-label="Close warning"
-              >
-                <X size={12} />
-              </button>
+              />
             </div>
 
             <div className="warning-window__body">
