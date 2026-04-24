@@ -3,9 +3,7 @@ import {
   FolderOpen,
   Github,
   Linkedin,
-  Mail,
   User,
-  Wrench,
 } from 'lucide-react'
 
 export const profile = {
@@ -13,14 +11,11 @@ export const profile = {
   role: 'Software Engineer',
   summary:
     'Software engineer focused on Java, Spring Boot, React, enterprise platforms, automated testing, and CI/CD modernization.',
-  email: 'your-email@example.com',
+  email: 'ruiz.windows@gmail.com',
   phone: '+52 000 000 0000',
   linkedin: 'https://www.linkedin.com/in/alberto-ruiz-castro-08380a157/',
   github: 'https://github.com/AlbertoDeveloper',
 }
-
-export const cvHeaderLine =
-  'Zacatecas / Guadalajara, Mexico | ruiz.windows@gmail.com | +52 493 107 08 35 | linkedin.com/in/alberto-ruiz-castro-08380a157'
 
 export const cvProfessionalSummary =
   'Full Stack Software Engineer with 6+ years of experience building and improving enterprise applications for Fortune 500 organizations, including The Home Depot, Verizon, and 24 Hour Fitness. Specialized in Java, Spring Boot, and React, with a track record of increasing automated test coverage to 80%+, modernizing legacy systems, improving production reliability, and streamlining CI/CD pipelines in large-scale consulting environments.'
@@ -37,8 +32,6 @@ export const desktopIcons = [
   { id: 'cv', label: 'Alberto CV', icon: FileText, type: 'window', windowId: 'cv' },
   { id: 'about', label: 'About Me', icon: User, type: 'window', windowId: 'about' },
   { id: 'projects', label: 'Projects', icon: FolderOpen, type: 'window', windowId: 'projects' },
-  { id: 'skills', label: 'Tech Stack', icon: Wrench, type: 'window', windowId: 'skills' },
-  { id: 'contact', label: 'Contact', icon: Mail, type: 'window', windowId: 'contact' },
   { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, type: 'link', href: profile.linkedin },
   { id: 'github', label: 'GitHub', icon: Github, type: 'link', href: profile.github },
 ]
@@ -47,8 +40,6 @@ export const initialWindows = {
   about: { title: 'About Me', open: false, minimized: false },
   cv: { title: 'Alberto_CV.txt', open: true, minimized: false },
   projects: { title: 'Projects Explorer', open: false, minimized: false },
-  skills: { title: 'Tech Stack', open: false, minimized: false },
-  contact: { title: 'Contact Info', open: false, minimized: false },
 }
 
 export const experience = [
@@ -119,22 +110,4 @@ export const projects = [
       'Raised automated test coverage significantly across several repositories and improved deployment confidence.',
     stack: 'JUnit, Java, CI pipelines',
   },
-]
-
-export const skills = [
-  'Java',
-  'Spring Boot',
-  'React',
-  'JavaScript',
-  'GitHub Actions',
-  'Jenkins',
-  'PostgreSQL',
-  'MySQL',
-  'JUnit',
-  'GCP',
-  'PCF',
-  'Pub/Sub',
-  'REST APIs',
-  'Grafana',
-  'Looker',
 ]

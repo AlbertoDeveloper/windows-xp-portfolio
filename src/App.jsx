@@ -1,27 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import {
   AlertTriangle,
-  Atom,
-  ChartPie,
-  CircleGauge,
-  Cloud,
-  CloudCog,
-  Coffee,
-  Cog,
-  Database,
-  DatabaseZap,
-  ExternalLink,
   FileDown,
-  FileCode2,
   Github,
   Linkedin,
   Mail,
-  Phone,
-  Sprout,
-  TestTube2,
-  Waypoints,
-  Webhook,
-  Workflow,
   X,
 } from 'lucide-react'
 import DesktopIcon from './components/DesktopIcon'
@@ -34,7 +17,6 @@ import cvPdfFileUrl from './resources/AlbertoRuizCV042026.pdf'
 import { trackEvent } from './utils/analytics'
 import {
   certifications,
-  cvHeaderLine,
   cvProfessionalSummary,
   cvTechnicalSkills,
   desktopIcons,
@@ -43,7 +25,6 @@ import {
   initialWindows,
   profile,
   projects,
-  skills,
 } from './data/portfolio'
 
 function SectionTitle({ children }) {
@@ -122,24 +103,6 @@ const getPersistedDesktopState = () => {
   }
 }
 
-const techIconsBySkill = {
-  Java: Coffee,
-  'Spring Boot': Sprout,
-  React: Atom,
-  JavaScript: FileCode2,
-  'GitHub Actions': Workflow,
-  Jenkins: Cog,
-  PostgreSQL: Database,
-  MySQL: DatabaseZap,
-  JUnit: TestTube2,
-  GCP: Cloud,
-  PCF: CloudCog,
-  'Pub/Sub': Waypoints,
-  'REST APIs': Webhook,
-  Grafana: CircleGauge,
-  Looker: ChartPie,
-}
-
 export default function App() {
   const persistedDesktop = useMemo(() => getPersistedDesktopState(), [])
   const [windows, setWindows] = useState(() => persistedDesktop?.windows ?? initialWindows)
@@ -194,7 +157,6 @@ export default function App() {
   const normalizeUrl = (url) => url.replace(/\/+$/, '')
   const getLinkArea = (linkElement) => {
     if (linkElement.closest('.start-menu')) return 'start_menu'
-    if (linkElement.closest('.contact-list')) return 'contact_window'
     return 'desktop'
   }
 
@@ -273,6 +235,12 @@ export default function App() {
     openWindow(item.windowId)
   }
 
+  const launchDesktopLinkById = (iconId) => {
+    const linkIcon = desktopIcons.find((item) => item.id === iconId && item.type === 'link')
+    if (!linkIcon) return
+    launchIcon(linkIcon)
+  }
+
   const handleExternalLinkCapture = (event) => {
     const link = event.target.closest('a[href]')
     if (!(link instanceof HTMLAnchorElement)) return
@@ -333,16 +301,41 @@ export default function App() {
                   <div className="cv-header-row">
                     <div>
                       <h1 className="hero-name">{profile.name}</h1>
-                      <p className="hero-summary">{cvHeaderLine}</p>
                     </div>
-                    <button
-                      type="button"
-                      className="cv-download-trigger"
-                      onClick={() => setDownloadDialogOpen(true)}
-                    >
-                      <FileDown size={16} />
-                      <span>Download PDF</span>
-                    </button>
+                    <div className="cv-action-buttons">
+                      <button
+                        type="button"
+                        className="cv-download-trigger"
+                        onClick={() => setDownloadDialogOpen(true)}
+                      >
+                        <FileDown size={16} />
+                        <span>Download PDF</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="cv-download-trigger"
+                        onClick={() => launchDesktopLinkById('github')}
+                      >
+                        <Github size={16} />
+                        <span>GitHub</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="cv-download-trigger"
+                        onClick={() => launchDesktopLinkById('linkedin')}
+                      >
+                        <Linkedin size={16} />
+                        <span>LinkedIn</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="cv-download-trigger"
+                        onClick={() => launchIcon({ id: 'email', type: 'link', href: `mailto:${profile.email}` })}
+                      >
+                        <Mail size={16} />
+                        <span>Email</span>
+                      </button>
+                    </div>
                   </div>
 
                   <SectionTitle>Professional Summary</SectionTitle>
@@ -436,84 +429,6 @@ export default function App() {
                         <p className="xp-card__meta">Stack: {project.stack}</p>
                       </article>
                     ))}
-                  </div>
-                </div>
-              )}
-
-              {id === 'skills' && (
-                <div className="window-body control-panel">
-                  <aside className="control-panel__sidebar">
-                    <div className="control-panel-box">
-                      <div className="control-panel-box__title">System Tasks</div>
-                      <ul className="control-panel-box__list">
-                        <li>View stack by category</li>
-                        <li>Review tools and platforms</li>
-                        <li>Browse engineering capabilities</li>
-                      </ul>
-                    </div>
-                    <div className="control-panel-box">
-                      <div className="control-panel-box__title">See Also</div>
-                      <ul className="control-panel-box__list">
-                        <li>Professional Summary</li>
-                        <li>Projects Explorer</li>
-                        <li>Contact Information</li>
-                      </ul>
-                    </div>
-                  </aside>
-
-                  <div className="control-panel__main">
-                    <h1 className="control-panel__heading">Tech Stack</h1>
-                    <p className="control-panel__subheading">Pick a technology</p>
-
-                    <div className="control-panel-grid">
-                      {skills.map((skill) => {
-                        const SkillIcon = techIconsBySkill[skill] || Cog
-                        return (
-                          <div key={skill} className="control-panel-item">
-                            <div className="control-panel-item__icon">
-                              <SkillIcon size={24} />
-                            </div>
-                            <div className="control-panel-item__label">{skill}</div>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {id === 'contact' && (
-                <div className="window-body">
-                  <h1 className="hero-name">Contact Info</h1>
-                  <div className="contact-list">
-                    <a href={`mailto:${profile.email}`} className="contact-link">
-                      <div className="contact-link__left">
-                        <Mail size={18} className="contact-link__icon" />
-                        <span>{profile.email}</span>
-                      </div>
-                      <ExternalLink size={16} />
-                    </a>
-                    <a href={`tel:${profile.phone.replace(/\s+/g, '')}`} className="contact-link">
-                      <div className="contact-link__left">
-                        <Phone size={18} className="contact-link__icon" />
-                        <span>{profile.phone}</span>
-                      </div>
-                      <ExternalLink size={16} />
-                    </a>
-                    <a href={profile.github} target="_blank" rel="noreferrer" className="contact-link">
-                      <div className="contact-link__left">
-                        <Github size={18} className="contact-link__icon" />
-                        <span>{profile.github.replace(/^https?:\/\//, '')}</span>
-                      </div>
-                      <ExternalLink size={16} />
-                    </a>
-                    <a href={profile.linkedin} target="_blank" rel="noreferrer" className="contact-link">
-                      <div className="contact-link__left">
-                        <Linkedin size={18} className="contact-link__icon" />
-                        <span>{profile.linkedin.replace(/^https?:\/\//, '')}</span>
-                      </div>
-                      <ExternalLink size={16} />
-                    </a>
                   </div>
                 </div>
               )}

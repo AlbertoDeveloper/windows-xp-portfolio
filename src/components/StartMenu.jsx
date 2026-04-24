@@ -29,15 +29,9 @@ export default function StartMenu({ isOpen, onClose, onOpenWindow }) {
         <a href={`mailto:${profile.email}`} className="start-menu__item">
           <Mail size={18} className="start-menu__item-icon" /> Email
         </a>
-        <button
-          onClick={() => {
-            onOpenWindow('contact')
-            onClose()
-          }}
-          className="start-menu__item start-menu__item--button"
-        >
+        <a href={`tel:${profile.phone.replace(/\s+/g, '')}`} className="start-menu__item">
           <Phone size={18} className="start-menu__item-icon" /> Phone Number
-        </button>
+        </a>
         <button
           onClick={() => {
             onOpenWindow('cv')

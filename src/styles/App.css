@@ -66,14 +66,21 @@
 .cv-header-row {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 12px;
+}
+
+.cv-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .cv-download-trigger {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  align-self: flex-start;
   border: 1px solid #0a2a87;
   background: linear-gradient(180deg, #69a5ff 0%, #2f79ea 55%, #1f5fce 100%);
   color: #ffffff;
@@ -172,152 +179,6 @@
   padding: 4px 8px;
   color: #20406d;
   font-size: 12px;
-}
-
-.skills-grid {
-  display: grid;
-  gap: 12px;
-}
-
-.skills-grid__item {
-  border: 1px solid #c5c1b4;
-  background: white;
-  padding: 12px;
-}
-
-.control-panel {
-  display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 0;
-  overflow: hidden;
-  border: 1px solid #5e7bd6;
-  background: #5e7bd6;
-  padding: 0;
-}
-
-.control-panel__sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  background: linear-gradient(180deg, #c8d8f8 0%, #aec5f0 100%);
-  padding: 14px;
-}
-
-.control-panel-box {
-  overflow: hidden;
-  border: 1px solid #7a9ad8;
-  background: #e8effd;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.control-panel-box__title {
-  background: linear-gradient(to right, #2b5fc3, #6a92e4);
-  padding: 6px 10px;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.control-panel-box__list {
-  margin: 0;
-  padding: 10px 12px 12px 26px;
-  color: #1b3470;
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-.control-panel__main {
-  background:
-    radial-gradient(circle at 78% 75%, rgba(255, 255, 255, 0.2), transparent 38%),
-    linear-gradient(150deg, rgba(255, 255, 255, 0.14), transparent 56%),
-    linear-gradient(180deg, #6d88de 0%, #5d79d3 100%);
-  padding: 20px;
-}
-
-.control-panel__heading {
-  margin: 0;
-  color: #f5f9ff;
-  font-size: 40px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-}
-
-.control-panel__subheading {
-  margin: 2px 0 16px;
-  color: #d8e5ff;
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.control-panel-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 18px;
-}
-
-.control-panel-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 8px;
-}
-
-.control-panel-item:hover {
-  border-color: rgba(198, 221, 255, 0.35);
-  background: rgba(232, 241, 255, 0.11);
-}
-
-.control-panel-item__icon {
-  display: grid;
-  height: 42px;
-  width: 42px;
-  place-items: center;
-  border: 1px solid rgba(167, 194, 244, 0.9);
-  border-radius: 8px;
-  background: linear-gradient(180deg, #f8fcff 0%, #dce9ff 100%);
-  color: #2452a7;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 3px 8px rgba(16, 35, 90, 0.34);
-}
-
-.control-panel-item__label {
-  color: #f4f8ff;
-  font-size: 17px;
-  font-weight: 700;
-  text-shadow: 0 1px 2px rgba(23, 45, 106, 0.45);
-}
-
-.contact-list {
-  display: grid;
-  gap: 12px;
-}
-
-.contact-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #c5c1b4;
-  background: white;
-  padding: 12px;
-  color: #2a2a2a;
-  text-decoration: none;
-}
-
-.contact-link:hover {
-  background: #f8fbff;
-}
-
-.contact-link__left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.contact-link__icon {
-  color: #123a7a;
 }
 
 .about-copy p {
@@ -422,13 +283,6 @@
     justify-content: space-between;
   }
 
-  .skills-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .control-panel-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 639px) {
@@ -449,24 +303,8 @@
     align-items: flex-start;
   }
 
-  .control-panel {
-    grid-template-columns: 1fr;
-  }
-
-  .control-panel__sidebar {
-    order: 2;
-  }
-
-  .control-panel__main {
-    order: 1;
-  }
-
-  .control-panel__heading {
-    font-size: 30px;
-  }
-
-  .control-panel-grid {
-    grid-template-columns: 1fr;
+  .cv-action-buttons {
+    justify-content: flex-start;
   }
 
   .warning-window {
